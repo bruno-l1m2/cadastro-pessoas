@@ -33,7 +33,7 @@ public class PessoaController {
     public ResponseEntity<PessoaModel> salvar(@RequestBody @Valid PessoaDTO pessoaDTO) {
         PessoaModel pessoa = new PessoaModel();
         BeanUtils.copyProperties(pessoaDTO, pessoa);
-        pessoa.setDtCadastro(LocalDate);
+        pessoa.setDtCadastro(LocalDate.now());
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(pessoa));
     }
 
