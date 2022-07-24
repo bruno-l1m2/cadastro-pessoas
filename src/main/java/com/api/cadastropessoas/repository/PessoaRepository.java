@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PessoaRepository extends JpaRepository<PessoaModel, Long> {
-
+    boolean existsByCpf(String cpf);
 }
