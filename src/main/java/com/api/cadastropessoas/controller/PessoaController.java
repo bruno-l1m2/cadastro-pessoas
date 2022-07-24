@@ -3,13 +3,11 @@ package com.api.cadastropessoas.controller;
 import com.api.cadastropessoas.dto.PessoaDTO;
 import com.api.cadastropessoas.model.PessoaModel;
 import com.api.cadastropessoas.service.PessoaService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,15 +24,28 @@ public class PessoaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PessoaModel> listarPorId(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(service.listarPorId(id), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(service.listarPorId(id));
     }
 
     @PostMapping()
-    public ResponseEntity<PessoaModel> salvar(@RequestBody @Valid PessoaDTO pessoaDTO) {
-        PessoaModel pessoa = new PessoaModel();
-        BeanUtils.copyProperties(pessoaDTO, pessoa);
-        pessoa.setDtCadastro(LocalDate.now());
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(pessoa));
+    public ResponseEntity<Object> salvar(@RequestBody @Valid PessoaDTO pessoaDTO) {
+        if (service.existsByCpf(pessoaDTO.getCpf())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe este CPF cadastrado!");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(pessoaDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PessoaModel> atualizar(@PathVariable(value= "id") Long id,
+                                                @RequestBody @Valid PessoaDTO pessoaDTO){
+        PessoaModel pessoa = service.atualizar(id, pessoaDTO);
+        return new ResponseEntity<>(pessoa, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletar(@PathVariable("id") Long id) {
+        service.deletar(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
