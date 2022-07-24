@@ -1,32 +1,28 @@
 package com.api.cadastropessoas.dto;
 
 import org.hibernate.validator.constraints.br.CPF;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
+import javax.validation.constraints.*;
+
 
 public class PessoaDTO {
 
-    @NotBlank(message = "Informe o seu nome")
+    @NotBlank(message = "Nome é obrigatório.")
+    @Size(min=2, max=30, message = "Campo nome deve ter entre 2 e 30 caracteres.")
     private String nome;
 
-    @NotBlank(message = "Informe o sua Data de Nascimento")
-    private LocalDate dtNascimento;
+    @NotBlank(message = "Data de Nascimento é obrigatório no formato dd/MM/yyyy.")
+    private String dtNascimento;
 
-    @NotBlank(message = "Informe o seu e-mail")
     @Email
     private String email;
 
-    @NotBlank(message = "Informe o seu sexo")
     private String sexo;
 
-    @NotBlank(message = "Informe o sua naturalidade")
     private String naturalidade;
 
-    @NotBlank(message = "Informe o sua nacionalidade")
     private String nacionalidade;
 
-    @NotBlank(message = "Informe o seu CPF")
+    @NotBlank(message = "CPF é obrigatório.")
     @CPF
     private String cpf;
 
@@ -38,11 +34,13 @@ public class PessoaDTO {
         this.nome = nome;
     }
 
-    public LocalDate getDtNascimento() {
+    public String getDtNascimento() {
+
         return dtNascimento;
     }
 
-    public void setDtNascimento(LocalDate dtNascimento) {
+    public void setDtNascimento(String dtNascimento) {
+
         this.dtNascimento = dtNascimento;
     }
 

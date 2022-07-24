@@ -2,41 +2,43 @@ package com.api.cadastropessoas.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TBPESSOA")
 public class PessoaModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoager")
+    @SequenceGenerator(name = "pessoager", sequenceName = "pessoa_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+
     private String sexo;
 
-    @Column(nullable = false)
+
     private String naturalidade;
 
-    @Column(nullable = false)
+
     private String nacionalidade;
 
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    @Column(nullable = false)
-    private LocalDate dtCadastro;
+    @Column(name = "dt_cadastro")
+    private LocalDateTime dtCadastro;
 
-    @Column(nullable = false)
-    private LocalDate dtAlteracao;
+    @Column(name = "dt_alteracao")
+    private LocalDateTime dtAlteracao;
 
     //Getter e Setter
     public Long getId() {
@@ -60,6 +62,7 @@ public class PessoaModel {
     }
 
     public void setDtNascimento(LocalDate dtNascimento) {
+
         this.dtNascimento = dtNascimento;
     }
 
@@ -103,19 +106,19 @@ public class PessoaModel {
         this.cpf = cpf;
     }
 
-    public LocalDate getDtCadastro() {
+    public LocalDateTime getDtCadastro() {
         return dtCadastro;
     }
 
-    public void setDtCadastro(LocalDate dtCadastro) {
+    public void setDtCadastro(LocalDateTime dtCadastro) {
         this.dtCadastro = dtCadastro;
     }
 
-    public LocalDate getDtAlteracao() {
+    public LocalDateTime getDtAlteracao() {
         return dtAlteracao;
     }
 
-    public void setDtAlteracao(LocalDate dtAlteracao) {
+    public void setDtAlteracao(LocalDateTime dtAlteracao) {
         this.dtAlteracao = dtAlteracao;
     }
 }
