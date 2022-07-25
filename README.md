@@ -1,2 +1,2 @@
 # cadastro-pessoas
-BackEnd - Projeto Cadastro de Pessoas
+BackEnd/FrontEnd- Projeto Cadastro de Pessoas
