@@ -1,0 +1,87 @@
+.item_info{
+    display: flexbox;
+    flex-grow: 1;
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid #c3c3c3;
+    box-shadow: 0 2px 7px (0,0,0, 0.15);
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+
+div{
+    font-size: 12px;
+    color: #31383f;
+    display: flexbox;
+}
+
+.titulo_info{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #2c3e50;
+    border: 4 2 2 2;
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.item_List{
+    font-size: 15px;
+    color: #2c3e50;
+    display: flex;
+    padding: 7px;
+    align-items: center;
+    border: 4 2 2 2;
+    
+}
+
+.item_dados{
+    
+    align-items: flex-start;
+
+}
+
+
+.item_button{
+    display: flex;
+    justify-content: space-between;
+
+}
+.excluir-button{
+        background-color: #f83605;
+        border-radius: 5px;
+        border: 4px double #f8f5f5;
+        color: #eeeeee;
+        text-align: center;
+        margin-left: 50px;
+        font-size: 13px;
+        padding: 5px;
+        width: 55px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+}
+
+.editar-Link{
+        background-color: #7b38d8;
+        border-radius: 5px;
+        color: #eeeeee;
+        text-decoration:none;
+        text-align: center;
+        font-size: 15px;
+        padding: 7px;
+        width: 55px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+
+}
+
+

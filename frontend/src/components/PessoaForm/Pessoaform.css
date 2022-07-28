@@ -1,0 +1,117 @@
+.pessoa-form-grupo {
+    display: flex ;
+    flex-direction: column;
+
+}
+
+.pessoa-form-grupo label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+}
+
+.pessoa-form-grupo input {
+    border-radius: 8px;
+    background-color: #fff;
+    height: 36px;
+    width: 600px;
+    padding: 0 10px;
+
+}
+
+.div-button{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.button-cadastrar{
+    background-color: #7b38d8;
+    border-radius: 5px;
+    border: 4px double #f8f5f5;
+    color: #eeeeee;
+    text-decoration:none;
+    text-align: center;
+    font-size: 15px;
+    padding: 7px;
+    width: 100px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+
+}
+
+.button-voltar{
+    background-color: #f83605;
+    border-radius: 5px;
+    border: 4px double #f8f5f5;
+    color: #eeeeee;
+    text-align: center;
+    margin-left: 50px;
+    font-size: 15px;
+    padding: 7px;
+    width: 100px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+
+}
+
+.pessoa-form-item{
+    max-width: 350px ;
+    color: #2c3e50;
+    padding: 7px;
+    align-items: center;
+}
+
+.pessoa-form-input{
+    max-width: 350px ;
+
+}
+
+.pessoa-form-sexo{
+    max-width: 100px ;
+}
+
+.pessoa-form-dtNasc{
+    max-width: 100px ;
+
+}
+
+.sexo{
+    border: 1px solid #fff;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+}
+.pessoa-form-item-radio{
+    flex-direction:column;
+    justify-content:space-between;
+    align-items: center;
+    max-width: 120px;
+    margin-left:10px;
+    text-align: center;
+
+}
+
+input[type="radio" i] {
+    box-sizing: border-box;
+    margin: 3px;
+    padding: 10px 10px 10px 10px;
+    max-width: 20px;
+}
+
+.pessoa-from-label{
+    display: flexbox;
+    justify-content:flex-end;
+    max-width: 100px;
+}

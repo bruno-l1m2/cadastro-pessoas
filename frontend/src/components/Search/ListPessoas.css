@@ -1,0 +1,42 @@
+.comp-search-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+
+.comp-search-input{
+    display: flex;
+    height: 42px;
+    border: 1px solid #cccc;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    font-size: 16px;
+
+}
+
+.comp-search-header h1{
+    text-transform: uppercase;
+    color: #888;
+}
+
+.comp-cadastro{
+    background-color: #7b38d8;
+    border-radius: 5px;
+    color: #eeeeee;
+    text-decoration:none;
+    text-align: center;
+    font-size: 15px;
+    padding: 7px;
+    width: 55px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+
+}
