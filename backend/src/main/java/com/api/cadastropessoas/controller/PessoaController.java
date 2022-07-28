@@ -27,6 +27,11 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(service.listarPorId(id));
     }
 
+    @GetMapping("/source")
+    public ResponseEntity<?> source() {
+        return ResponseEntity.status(HttpStatus.OK).body("https://github.com/bruno-l1m2/cadastro-pessoas.git");
+    }
+
     @PostMapping()
     public ResponseEntity<Object> salvar(@RequestBody @Valid PessoaDTO pessoaDTO) {
         if (service.existsByCpf(pessoaDTO.getCpf())) {
