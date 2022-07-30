@@ -1,19 +1,30 @@
 import React from "react";
 import './Item.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from "../../utils/api";
+import moment from "moment";
 
 
 const PessoaItem = ({pessoas}) =>{
-    
-    
+
+    const navigate = useNavigate();
     const delete_item = (id) =>{
         api.delete(`/api/pessoa/${id}`)
+        navigate('/');
+
     }
 
     
     return(
     <div className="item_info">
+            <div className="item_List">
+                <label className="titulo_info">
+                    Código: 
+                </label>
+                <label className="item_dados">
+                    {pessoas.id}
+                </label>
+            </div>
             <div className="item_List">
                 <label className="titulo_info">
                     Nome: 
@@ -35,7 +46,7 @@ const PessoaItem = ({pessoas}) =>{
                         Data de Nascimento: 
                 </label>
                 <label className="item_dados">
-                    {pessoas.dtNascimento}
+                    {moment(pessoas.dtNascimento, "YYYY/MM/DD").format("DD/MM/YYYY")}
                 </label>
             </div>
             <div className="item_List">

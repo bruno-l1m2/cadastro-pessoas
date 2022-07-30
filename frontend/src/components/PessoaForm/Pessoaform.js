@@ -4,20 +4,38 @@ import axios from "axios";
 import { useParams, useNavigate} from 'react-router-dom';
 import './Pessoaform.css';
 import moment from "moment";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {  TextField } from "@mui/material";
 
 const PessoaForm = ({id}) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
-  const [dtNasc, setDtNasc] = useState("");
   const [dtNascimento, setDtNascimento] = useState("");
+  const [dtNasc, setDtNasc] = useState("");
   const [sexo, setSexo] = useState("");
   const [naturalidade, setNaturalidade] = useState("");
   const [nacionalidade, setNacionalidade] = useState("");
+
   const navigate = useNavigate();
   const params = useParams();
+
+
+
+  const opSexo = ['Masculino','Feminino','Outro']
+
+  const opNac = ['Brasil','China','Estados Unidos','Outros']
+
+  const opNat = ['Paulista','Brasiliense','Outro']
+
+
+  
   const handleSubmit = async (event) => {
       event.preventDefault();
+
+
       if (!nome) {
         alert("Nome é um campo obrigatório.");
         return;
@@ -35,19 +53,17 @@ const PessoaForm = ({id}) => {
         return;
       } 
       if (params.id) {
-        api.put(`/api/pessoa/${params.id}`, 
-          {
-            nome: nome,
-            dtNascimento: dtNascimento,
-            email: email,
-            sexo: sexo,
-            naturalidade: naturalidade,
-            nacionalidade: nacionalidade,
-            cpf : cpf
-          }
-          ).then(() => {
+        api.put(`/api/pessoa/${params.id}`, {
+          nome: nome,
+          dtNascimento: dtNascimento,
+          email: email,
+          sexo: sexo,
+          naturalidade: naturalidade,
+          nacionalidade: nacionalidade,
+          cpf : cpf
+         }).then(() => {
             alert("Registro atualizado com sucesso!");
-            navigate('/list');
+            navigate('/');
           }
             ).catch((error) => {
               alert(error.response.data);
@@ -60,39 +76,40 @@ const PessoaForm = ({id}) => {
               sexo: sexo,
               naturalidade: naturalidade,
               nacionalidade: nacionalidade,
-              cpf : cpf,
-              })
+              cpf : cpf
+             })
             .then((response) => {
                 alert("Cadastro realizado com sucesso!!");
-                navigate('/list');
+                navigate('/');
             }).catch((response) =>{
                 alert('Desculpe o transtorno. Estamos resolvendo o problema.');
+                //console.log(dtNascimento);
             })
     }}
-  useEffect(() => {
-    if (params.id) {
-      api.get(`/api/pessoa/${params.id}`).then((response) => {
-        setNome(response.data.nome);
-        setEmail(response.data.email);
-        setCpf(response.data.cpf);
-        setDtNascimento(response.data.dtNascimento);
-        setNacionalidade(response.data.nacionalidade);
-        setNaturalidade(response.data.naturalidade);
-        setSexo(response.data.sexo);
-      }).catch((response) => {
-        console.log(response.date);
-        alert("GET Desculpe o transtorno. Estamos resolvendo o problema.");
-      });
-    }
-  }, [params]);
+    useEffect(() => {
+      if (params.id) {
+        api.get(`/api/pessoa/${params.id}`).then((response) => {
+          setNome(response.data.nome);
+          setEmail(response.data.email);
+          setCpf(response.data.cpf);
+          setNacionalidade(response.data.nacionalidade);
+          setNaturalidade(response.data.naturalidade);
+          setSexo(response.data.sexo);
+          setDtNascimento(new Date (response.data.dtNascimento).utc().format('YYYY-MM-DD'));
+        }).catch((response) => {
+          console.log(response.date);
+          alert("GET Desculpe o transtorno. Estamos resolvendo o problema.");
+        });
+      }
+    }, [params]);
   const handleCancel = () => {
-      alert("As alterações preenchidas não serão gravadas.")
+      alert("Os campos preenchidos serão cancelados!");
         navigate("/");
   }
   return (
   <div>
     <h1>Formulário</h1>
-    <h2>Nova Pessoa</h2>
+    <h2>Cadastro de Pessoa</h2>
   <form onSubmit={handleSubmit}>
       <div className="pessoa-form-grupo">
         <div className="pessoa-form-item">
@@ -124,66 +141,81 @@ const PessoaForm = ({id}) => {
               id="email"
               label="Email"
               placeholder="E-mail"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               value={email}
               onChange={(e) => setEmail(e.target.value)}       
           />
         </div>
         <div className="pessoa-form-item">
-          <input 
-            className="pessoa-form-dtNasc"
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
             disableFuture
-            type="text"
-            id="dtNasc"
-            label="Data de Nascimento"
             placeholder="dd/mm/aaaa"
-            openTo="day"
-            views={["day","month","year"]}
-            value={dtNascimento}
-            dateFormat="dd/MM/yyyy"
-            onChange={(e) => setDtNascimento(e.target.value)}
-            />
+            label="Data de Nascimento"
+            openTo="month"
+            views={["day", "month", "year"]}
+            value={dtNasc}
+            onChange={(newDtNascimento) => {
+              setDtNasc(newDtNascimento)
+              setDtNascimento(moment(dtNasc).utc().format('MM/DD/YYYY'))
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+        </div> 
+         
+        <div className="pessoa-form-item">
+        <select 
+          name="sexo"
+          id="sexo"
+          label="sexo"
+          value={sexo}
+          onChange={(e) => setSexo(e.target.value)}
+        >
+          <option value= "Sexo" selected> Sexo </option>
+          <option value={opSexo[0]}> {opSexo[0]} </option>
+          <option value={opSexo[1]}>{opSexo[1]}</option>
+          <option value={opSexo[2]}>{opSexo[2]}</option>
+        </select>
         </div>
         <div className="pessoa-form-item">
-          <input 
-            className="pessoa-form-nat"
-            disableFuture
-            required
-            id="sexo"
-            label="sexo"
-            placeholder="sexo"
-            value={sexo}
-            onChange={(e) => setSexo(e.target.value)}          
-        />
+        <select 
+          id="nacionalidade"
+          label="nacionalidade"
+          value={nacionalidade}
+          onChange={(e) => setNacionalidade(e.target.value)}
+        >
+          <option value= "nacionalidade" selected>Nacionalidade</option>
+          <option value={opNac[0]}>{opNac[0]}</option>
+          <option value={opNac[1]}>{opNac[1]}</option>
+          <option value={opNac[2]}>{opNac[2]}</option>
+        </select>
         </div>
         <div className="pessoa-form-item">
-          <input 
-            className="pessoa-form-nat"
-            disableFuture
-            required
-            id="naturalidade"
-            label="Naturalidade"
-            placeholder="Naturalidade"
-            value={naturalidade}
-            onChange={(e) => setNaturalidade(e.target.value)}          
-        />
-        </div>
-        <div className="pessoa-form-item">
-            <input 
-            disableFuture
-            required
-            id="nacionalidade"
-            label="Nacionalidade"
-            placeholder="Nacionalidade"
-            value={nacionalidade}
-            onChange={(e) => setNacionalidade(e.target.value)}          
-            />
+        <select 
+          id="naturalidade"
+          label="naturalidade"
+          //disabled="disabled"
+          onChange={(e) => setNacionalidade(e.target.value)}
+        >
+          <option value= "naturalidade" selected>Naturalidade</option>
+          <option value={opNat[0]}>{opNat[0]}</option>
+          <option value={opNat[1]}>{opNat[1]}</option>
+          <option value={opNat[2]}>{opNat[2]}</option>
+        </select>
         </div>
         <div className="div-button">
-          <button className="button-cadastrar" onClick={handleSubmit}>
-            Cadastrar
+          <button 
+            className="button-cadastrar" 
+            onClick={handleSubmit}>
+              Cadastrar
           </button>
-          <button type="submit" className="button-voltar" onClick={handleCancel}>
-            Voltar
+          <button 
+            type="submit" 
+            className="button-voltar" 
+            onClick={handleCancel}>
+              Cancelar
           </button>
         </div>
       </div>                

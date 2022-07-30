@@ -13,13 +13,13 @@ const ListPessoas = ({id}) =>{
         params = search;
     }
     
-
     useEffect(() => {
-        axios.get('http://localhost:8080/api/pessoa', { params })
+        axios.get('http://localhost:8080/api/pessoa/', { params })
         .then((response) => {
             setPessoas(response.data);
         }); 
     },[search]);
+
     return (
         <div className="comp-search">
             <header className="comp-search-header">
