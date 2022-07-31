@@ -5,7 +5,7 @@ services:
     build: 
       context: ./frontend/
       dockerfile: Dockerfile
-    image: frontend:0.1.0
+    image: brunol1m2/app-frontend:1.0
     restart: always
     ports: 
       - 3000:3000
@@ -13,7 +13,8 @@ services:
     build: 
       context: ./backend/
       dockerfile: Dockerfile
-    image: backend:0.0.1-SNAPSHOT
+    image: brunol1m2/api-backend:1.0
     restart: always
     ports:
       - 8080:8080
+  

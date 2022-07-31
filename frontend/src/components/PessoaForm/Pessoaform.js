@@ -4,37 +4,53 @@ import axios from "axios";
 import { useParams, useNavigate} from 'react-router-dom';
 import './Pessoaform.css';
 import moment from "moment";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {  TextField } from "@mui/material";
+//import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+//import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+//import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+//import {  TextField } from "@mui/material";
+
+/*const initialValues = {
+  nome: "",
+  dtNascimento: "",
+  email: "",
+  sexo: "",
+  naturalidade: "",
+  nacionalidade: "",
+  cpf : ""
+};  */
 
 const PessoaForm = ({id}) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
   const [dtNascimento, setDtNascimento] = useState("");
-  const [dtNasc, setDtNasc] = useState("");
+  //const [dtNasc, setDtNasc] = useState("");
   const [sexo, setSexo] = useState("");
   const [naturalidade, setNaturalidade] = useState("");
   const [nacionalidade, setNacionalidade] = useState("");
 
+
   const navigate = useNavigate();
   const params = useParams();
-
-
-
+  
+  //const [values, setValues] = useState(initialValues);
+  
   const opSexo = ['Masculino','Feminino','Outro']
-
   const opNac = ['Brasil','China','Estados Unidos','Outros']
-
   const opNat = ['Paulista','Brasiliense','Outro']
 
 
   
   const handleSubmit = async (event) => {
+      
       event.preventDefault();
+      
+     
 
+       /* setValues({
+          ...values,
+          [event.target.name]: event.target.value
+        });*/
 
       if (!nome) {
         alert("Nome é um campo obrigatório.");
@@ -69,6 +85,7 @@ const PessoaForm = ({id}) => {
               alert(error.response.data);
           });
         } else {
+            
             axios.post('http://localhost:8080/api/pessoa/', {
               nome: nome,
               dtNascimento: dtNascimento,
@@ -95,7 +112,10 @@ const PessoaForm = ({id}) => {
           setNacionalidade(response.data.nacionalidade);
           setNaturalidade(response.data.naturalidade);
           setSexo(response.data.sexo);
-          setDtNascimento(new Date (response.data.dtNascimento).utc().format('YYYY-MM-DD'));
+          
+          setDtNascimento(moment(response.data.dtNascimento, 'YYYY,MM,DD').format('YYYY-MM-DD'))
+         
+          //setDtNascimento(new Date (response.data.dtNascimento).utc().format('YYYY-MM-DD'));
         }).catch((response) => {
           console.log(response.date);
           alert("GET Desculpe o transtorno. Estamos resolvendo o problema.");
@@ -116,7 +136,7 @@ const PessoaForm = ({id}) => {
           <input 
               disableFuture
               required
-              id="nome"
+              name="nome"
               label="Nome Completo"
               placeholder="Nome"
               value={nome}
@@ -124,15 +144,18 @@ const PessoaForm = ({id}) => {
           />  
         </div>
         <div className="pessoa-form-item">
-          <input 
-              disableFuture
-              required
-              id="cpf"
-              label="CPF"
-              placeholder="CPF"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}          
-          />
+
+               
+           <input 
+                disableFuture
+                required
+                id="cpf"
+                label="CPF"
+                placeholder="CPF"
+                pattern="[0-9]{11}"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}          
+            />
         </div>
         <div className="pessoa-form-item">
           <input 
@@ -147,22 +170,13 @@ const PessoaForm = ({id}) => {
           />
         </div>
         <div className="pessoa-form-item">
-
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            disableFuture
-            placeholder="dd/mm/aaaa"
-            label="Data de Nascimento"
-            openTo="month"
-            views={["day", "month", "year"]}
-            value={dtNasc}
-            onChange={(newDtNascimento) => {
-              setDtNasc(newDtNascimento)
-              setDtNascimento(moment(dtNasc).utc().format('MM/DD/YYYY'))
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+                <input 
+                  type="date"
+                  name="DataNascimento"
+                  value={dtNascimento}
+                  onChange={(e) => setDtNascimento(e.target.value)}
+                />
+        
         </div> 
          
         <div className="pessoa-form-item">
@@ -181,7 +195,7 @@ const PessoaForm = ({id}) => {
         </div>
         <div className="pessoa-form-item">
         <select 
-          id="nacionalidade"
+          name="nacionalidade"
           label="nacionalidade"
           value={nacionalidade}
           onChange={(e) => setNacionalidade(e.target.value)}
@@ -194,7 +208,7 @@ const PessoaForm = ({id}) => {
         </div>
         <div className="pessoa-form-item">
         <select 
-          id="naturalidade"
+          name="naturalidade"
           label="naturalidade"
           //disabled="disabled"
           onChange={(e) => setNacionalidade(e.target.value)}
