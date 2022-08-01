@@ -4,36 +4,18 @@ import axios from "axios";
 import { useParams, useNavigate} from 'react-router-dom';
 import './Pessoaform.css';
 import moment from "moment";
-//import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-//import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-//import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-//import {  TextField } from "@mui/material";
-
-/*const initialValues = {
-  nome: "",
-  dtNascimento: "",
-  email: "",
-  sexo: "",
-  naturalidade: "",
-  nacionalidade: "",
-  cpf : ""
-};  */
 
 const PessoaForm = ({id}) => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
   const [dtNascimento, setDtNascimento] = useState("");
-  //const [dtNasc, setDtNasc] = useState("");
   const [sexo, setSexo] = useState("");
   const [naturalidade, setNaturalidade] = useState("");
   const [nacionalidade, setNacionalidade] = useState("");
 
-
   const navigate = useNavigate();
   const params = useParams();
-  
-  //const [values, setValues] = useState(initialValues);
   
   const opSexo = ['Masculino','Feminino','Outro']
   const opNac = ['Brasil','China','Estados Unidos','Outros']
@@ -44,13 +26,6 @@ const PessoaForm = ({id}) => {
   const handleSubmit = async (event) => {
       
       event.preventDefault();
-      
-     
-
-       /* setValues({
-          ...values,
-          [event.target.name]: event.target.value
-        });*/
 
       if (!nome) {
         alert("Nome é um campo obrigatório.");
@@ -77,7 +52,7 @@ const PessoaForm = ({id}) => {
           naturalidade: naturalidade,
           nacionalidade: nacionalidade,
           cpf : cpf
-         }).then(() => {
+            }).then(() => {
             alert("Registro atualizado com sucesso!");
             navigate('/');
           }
@@ -85,7 +60,6 @@ const PessoaForm = ({id}) => {
               alert(error.response.data);
           });
         } else {
-            
             axios.post('http://localhost:8080/api/pessoa/', {
               nome: nome,
               dtNascimento: dtNascimento,
@@ -94,13 +68,13 @@ const PessoaForm = ({id}) => {
               naturalidade: naturalidade,
               nacionalidade: nacionalidade,
               cpf : cpf
-             })
+            })
             .then((response) => {
                 alert("Cadastro realizado com sucesso!!");
                 navigate('/');
-            }).catch((response) =>{
+            }).catch((error) =>{
                 alert('Desculpe o transtorno. Estamos resolvendo o problema.');
-                //console.log(dtNascimento);
+                console.log(error);
             })
     }}
     useEffect(() => {
@@ -112,20 +86,19 @@ const PessoaForm = ({id}) => {
           setNacionalidade(response.data.nacionalidade);
           setNaturalidade(response.data.naturalidade);
           setSexo(response.data.sexo);
-          
-          setDtNascimento(moment(response.data.dtNascimento, 'YYYY,MM,DD').format('YYYY-MM-DD'))
-         
-          //setDtNascimento(new Date (response.data.dtNascimento).utc().format('YYYY-MM-DD'));
+          setDtNascimento(moment(response.data.dtNascimento, 'YYYY,MM,DD').format('DD/MM/YYYY'));
         }).catch((response) => {
           console.log(response.date);
-          alert("GET Desculpe o transtorno. Estamos resolvendo o problema.");
+          alert("Desculpe o transtorno. Estamos resolvendo o problema.");
         });
       }
     }, [params]);
+
   const handleCancel = () => {
       alert("Os campos preenchidos serão cancelados!");
         navigate("/");
   }
+
   return (
   <div>
     <h1>Formulário</h1>
@@ -136,6 +109,7 @@ const PessoaForm = ({id}) => {
           <input 
               disableFuture
               required
+              autoComplete="off"
               name="nome"
               label="Nome Completo"
               placeholder="Nome"
@@ -144,23 +118,21 @@ const PessoaForm = ({id}) => {
           />  
         </div>
         <div className="pessoa-form-item">
-
-               
-           <input 
+         <input
                 disableFuture
-                required
+                className={"p-inputtext-sm"}
                 id="cpf"
-                label="CPF"
+                mask = {"999.999.999-99"}
                 placeholder="CPF"
-                pattern="[0-9]{11}"
+                maxLength="11"
+                autoComplete="off"
                 value={cpf}
-                onChange={(e) => setCpf(e.target.value)}          
-            />
+                onChange={(e) => setCpf(e.target.value)}
+              />
         </div>
         <div className="pessoa-form-item">
           <input 
-              disableFuture
-              required
+              autoComplete="off"
               id="email"
               label="Email"
               placeholder="E-mail"
@@ -171,14 +143,15 @@ const PessoaForm = ({id}) => {
         </div>
         <div className="pessoa-form-item">
                 <input 
-                  type="date"
+                  type="text"
                   name="DataNascimento"
                   value={dtNascimento}
+                  maxLength="10"
+                  autoComplete="off"
+                  placeholder="DD/MM/YYYY"
                   onChange={(e) => setDtNascimento(e.target.value)}
                 />
-        
         </div> 
-         
         <div className="pessoa-form-item">
         <select 
           name="sexo"
@@ -210,10 +183,8 @@ const PessoaForm = ({id}) => {
         <select 
           name="naturalidade"
           label="naturalidade"
-          //disabled="disabled"
           onChange={(e) => setNacionalidade(e.target.value)}
-        >
-          <option value= "naturalidade" selected>Naturalidade</option>
+        > <option value= "naturalidade" selected>Naturalidade</option>
           <option value={opNat[0]}>{opNat[0]}</option>
           <option value={opNat[1]}>{opNat[1]}</option>
           <option value={opNat[2]}>{opNat[2]}</option>

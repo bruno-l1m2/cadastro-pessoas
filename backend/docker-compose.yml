@@ -10,8 +10,7 @@ db:
     image: postgres:14.1-alpine
     container_name: postgres
     restart: always
-    environment:
-      - SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres  
+    environment:  
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Blr2151@
     ports:

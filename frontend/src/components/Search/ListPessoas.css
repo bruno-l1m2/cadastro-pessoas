@@ -6,17 +6,6 @@
 
 }
 
-.comp-search-input{
-    display: flex;
-    height: 42px;
-    border: 1px solid #cccc;
-    border-radius: 4px;
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 0 10px;
-    font-size: 16px;
-
-}
 
 .comp-search-header h1{
     text-transform: uppercase;

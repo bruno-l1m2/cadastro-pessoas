@@ -1,29 +1,18 @@
-.pessoa-form-grupo {
+.pessoa-form-grupo input, select {
     display: flex ;
     flex-direction: column;
-
-}
-
-.pessoa-form-grupo label {
-    margin-bottom: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #555;
-}
-
-.pessoa-form-grupo input {
     border-radius: 8px;
     background-color: #fff;
     height: 36px;
     width: 600px;
     padding: 0 10px;
+    color: #555;
 
 }
 
 .div-button{
     display: flex;
     justify-content: space-between;
-
 }
 
 .button-cadastrar{
@@ -42,7 +31,6 @@
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-
 }
 
 .button-voltar{
@@ -61,57 +49,19 @@
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-
 }
 
 .pessoa-form-item{
-    max-width: 350px ;
+    max-width: 100px ;
     color: #2c3e50;
     padding: 7px;
     align-items: center;
 }
 
-.pessoa-form-input{
-    max-width: 350px ;
-
-}
-
-.pessoa-form-sexo{
-    max-width: 100px ;
-}
-
-.pessoa-form-dtNasc{
-    max-width: 100px ;
-
-}
-
-.sexo{
-    border: 1px solid #fff;
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-content: center;
-    border-radius: 50%;
-}
-.pessoa-form-item-radio{
-    flex-direction:column;
-    justify-content:space-between;
-    align-items: center;
-    max-width: 120px;
-    margin-left:10px;
-    text-align: center;
-
-}
-
-input[type="radio" i] {
+select {
     box-sizing: border-box;
     margin: 3px;
     padding: 10px 10px 10px 10px;
-    max-width: 20px;
+    max-width: 150px;
 }
 
-.pessoa-from-label{
-    display: flexbox;
-    justify-content:flex-end;
-    max-width: 100px;
-}

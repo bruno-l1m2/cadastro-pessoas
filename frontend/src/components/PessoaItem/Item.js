@@ -13,8 +13,6 @@ const PessoaItem = ({pessoas}) =>{
         navigate('/');
 
     }
-
-    
     return(
     <div className="item_info">
             <div className="item_List">
@@ -35,20 +33,6 @@ const PessoaItem = ({pessoas}) =>{
             </div>
             <div className="item_List">
                 <label className="titulo_info">
-                        Data de Nascimento: 
-                </label>
-                <label className="item_dados">
-                    {moment(pessoas.dtNascimento, "YYYY/MM/DD").format("DD/MM/YYYY")}
-                </label>
-                <label className="titulo_info">
-                    CPF: 
-                </label>
-                <label className="item_dados" onBlur={"ValidaCPF();"}>
-                    {pessoas.cpf}
-                </label> 
-            </div>
-            <div className="item_List">
-                <label className="titulo_info">
                         E-mail: 
                 </label>
                 <label className="item_dados">
@@ -57,17 +41,38 @@ const PessoaItem = ({pessoas}) =>{
             </div>
             <div className="item_List">
                 <label className="titulo_info">
+                        Data de Nascimento: 
+                </label>
+                <label className="item_dados">
+                    {moment(pessoas.dtNascimento, "YYYY/MM/DD").format("DD/MM/YYYY")}
+                </label>
+                </div>
+                <div className="item_List">
+                <label className="titulo_info">
+                    CPF: 
+                </label>
+                <label className="item_dados" onBlur={"ValidaCPF();"}>
+                    {pessoas.cpf}
+                </label> 
+            </div>
+            <div className="item_List">
+            <label className="titulo_info">
                         Sexo: 
                 </label>
                 <label className="item_dados">
                     {pessoas.sexo}
-                </label>  
+                </label> 
+            </div>
+            <div className="item_List">
+                 
                 <label className="titulo_info">
                     Naturalidade: 
                 </label>
                 <label className="item_dados">
                     {pessoas.naturalidade}
                 </label>
+                </div>
+                <div className="item_List">
                 <label className="titulo_info">
                     Nacionalidade: 
                 </label>
